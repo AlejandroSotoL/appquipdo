@@ -26,7 +26,7 @@ import com.tramites1cero1.tramiappquibdo.ui.theme.Gray900
 import com.tramites1cero1.tramiappquibdo.ui.theme.RobotoBold
 import com.tramites1cero1.tramiappquibdo.ui.theme.buttoncolorsOptionScreen
 import kotlinx.coroutines.launch
-
+import com.tramites1cero1.tramiappquibdo.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginOptionsScreen(

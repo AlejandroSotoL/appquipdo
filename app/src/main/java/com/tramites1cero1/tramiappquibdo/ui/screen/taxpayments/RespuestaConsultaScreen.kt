@@ -36,6 +36,7 @@ import com.tramites1cero1.tramiappquibdo.MunicipalityUiState
 import com.tramites1cero1.tramiappquibdo.MunicipalityViewModel
 import com.tramites1cero1.tramiappquibdo.data.model.ValidationResponseDTO
 import com.tramites1cero1.tramiappquibdo.domain.model.Tax
+import com.tramites1cero1.tramiappquibdo.ui.screen.main.MainViewModel
 import com.tramites1cero1.tramiappquibdo.ui.screen.taxpayments.components.TaxCard
 import com.tramites1cero1.tramiappquibdo.ui.theme.White
 import kotlinx.coroutines.delay
@@ -75,9 +76,9 @@ fun TaxResultsScreen(
     // --- Inicialización ---
     LaunchedEffect(municipalityId) {
         viewModel.setTaxes(taxes)
-        if (municipalityId != 0) {
-            munViewModel.loadMunicipalityData(municipalityId)
-        }
+//        if (municipalityId != 0) {
+//            munViewModel.loadMunicipalityData(municipalityId)
+//        }
     }
 
     LaunchedEffect(state.paymentUrl) {

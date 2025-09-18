@@ -11,9 +11,11 @@ import com.tramites1cero1.tramiappquibdo.data.model.UserDTO
 import com.tramites1cero1.tramiappquibdo.data.network.LocationProvider
 import com.tramites1cero1.tramiappquibdo.domain.model.InfoTramite
 import com.tramites1cero1.tramiappquibdo.domain.model.MunicipalityModel
+import com.tramites1cero1.tramiappquibdo.domain.model.MunicipalityProcedure
 import com.tramites1cero1.tramiappquibdo.domain.model.QueryField
 import com.tramites1cero1.tramiappquibdo.domain.model.TramiteAccion
 import com.tramites1cero1.tramiappquibdo.domain.repository.AuthRepository
+import com.tramites1cero1.tramiappquibdo.domain.repository.MunicipalityRepository
 import com.tramites1cero1.tramiappquibdo.domain.repository.UserPreferencesRepository
 import com.tramites1cero1.tramiappquibdo.ui.navigation.AppRoutes
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.MainEvent.*
@@ -24,6 +26,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -67,6 +70,8 @@ data class MainUiState(
     val isPqrdVisible : Boolean = false,
 )
 
+
+
 sealed interface MainEvent {
     data class Navigate(val route: String) : MainEvent
     data class OpenUrl(val url: String) : MainEvent
@@ -87,7 +92,8 @@ enum class ModalFormMode {
 class MainViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val locationProvider: LocationProvider
+    private val locationProvider: LocationProvider,
+    private val municipalityRepository: MunicipalityRepository,
 
 ) : ViewModel(){
     private val _uiState = MutableStateFlow(MainUiState())
@@ -95,6 +101,7 @@ class MainViewModel @Inject constructor(
 
     val isActiveReminders = userPreferencesRepository.remindersIsVisibleFlow
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
 
     fun onSaveSelectionRemiders(isActive: Boolean) {
         viewModelScope.launch {

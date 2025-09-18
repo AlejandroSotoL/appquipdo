@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -71,29 +72,16 @@ class MainActivityViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            combine(
-                userPreferencesRepository.getTheme(),
-                userPreferencesRepository.getSavedUbication()
-            ) { isDark, ubicacionPref ->
-                var destination: String? = ""
-
-                if (ubicacionPref.guardado) {
-                    destination = AppRoutes.MAIN_NAV_GRAPH
-                } else {
-                    destination = AppRoutes.INITIAL_NAV_GRAPH
-                }
-
-                // 4. Actualizamos el estado con toda la información.
+            userPreferencesRepository.getTheme().collect { isDark ->
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        startDestination = destination,
-                        municipalityId = ubicacionPref.municipalityId,
+                        startDestination = AppRoutes.MAIN_NAV_GRAPH,
+                        municipalityId = 19,
                         isDarkTheme = isDark
                     )
                 }
-
-            }.collect()
+            }
         }
     }
 

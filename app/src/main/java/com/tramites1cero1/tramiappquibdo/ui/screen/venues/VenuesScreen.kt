@@ -35,7 +35,7 @@ import androidx.compose.ui.zIndex
 import com.tramites1cero1.tramiappquibdo.ui.components.VenueItem
 import com.tramites1cero1.tramiappquibdo.ui.screen.venues.VenuesViewModel
 import com.tramites1cero1.tramiappquibdo.ui.screen.venues.components.ReservationForm
-
+import com.tramites1cero1.tramiappquibdo.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

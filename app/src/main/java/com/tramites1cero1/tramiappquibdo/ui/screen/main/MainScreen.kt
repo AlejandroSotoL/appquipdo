@@ -58,13 +58,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-
 import com.tramites1cero1.tramiappquibdo.MunicipalityUiState
 import com.tramites1cero1.tramiappquibdo.MunicipalityViewModel
 import com.tramites1cero1.tramiappquibdo.R
 import com.tramites1cero1.tramiappquibdo.domain.model.TramiteAccion
 import com.tramites1cero1.tramiappquibdo.ui.components.FooterSponsors
 import com.tramites1cero1.tramiappquibdo.ui.navigation.AppRoutes
+import com.tramites1cero1.tramiappquibdo.ui.screen.initial.SelectMunViewModel
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.components.BottomNavBar
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.components.BottomNavBarActions
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.components.ConfirmExitDialog
@@ -92,8 +92,8 @@ import kotlinx.coroutines.launch
 fun MainScreen(
     navController: NavController,
     mainViewModel: MainViewModel = hiltViewModel(),
+    munViewModel: MunicipalityViewModel,
     remindersViewModel: RemindersViewModel = hiltViewModel(),
-    munViewModel: MunicipalityViewModel = hiltViewModel(),
 ) {
     val state by mainViewModel.uiState.collectAsStateWithLifecycle()
     val munState by munViewModel.uiState.collectAsStateWithLifecycle()
@@ -121,11 +121,11 @@ fun MainScreen(
         mainViewModel.loadSavedMunicipality()
     }
 
-    LaunchedEffect(state.currentIdMunicipality, state.isSaved) {
-        if (state.isSaved && state.currentIdMunicipality != 0) {
-            munViewModel.loadMunicipalityData(state.currentIdMunicipality ?: 0)
-        }
-    }
+//    LaunchedEffect(state.currentIdMunicipality, state.isSaved) {
+//        if (state.isSaved && state.currentIdMunicipality != 0) {
+//            munViewModel.loadMunicipalityData(state.currentIdMunicipality ?: 0)
+//        }
+//    }
 
     LaunchedEffect(currentRoute) {
         mainViewModel.onRouteChanged(currentRoute)

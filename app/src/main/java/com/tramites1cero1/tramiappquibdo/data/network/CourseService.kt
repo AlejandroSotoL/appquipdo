@@ -13,7 +13,7 @@ import retrofit2.http.POST
 interface CourseApiService {
 
     @Headers("Accept: application/json;odata=verbose")
-    @GET("_api/web/lists/getbytitle('Cursos')/items?\$select=ID,Title,Descripcion,Categoria,CupoDisponible,FechaInicio,FechaFin,EncodedAbsUrl")
+    @GET("_api/web/lists/getbytitle('Cursos')/items?\$select=ID,Title,Description,Categoria,CupoDisponible,FechaInicio,FechaFin,EncodedAbsUrl")
     suspend fun getCourses(): Response<CourseListResponseWrapperDTO>
 
     @Headers("Accept: application/json;odata=verbose")

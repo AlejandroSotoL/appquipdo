@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace = "com.tramites1cero1.centralizacion"
+    namespace = "com.tramites1cero1.tramiappquibdo"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.tramites1cero1.centralizacion"
+        applicationId = "com.tramites1cero1.tramiappquibdo"
         minSdk = 24
         targetSdk = 35
         versionCode = 5

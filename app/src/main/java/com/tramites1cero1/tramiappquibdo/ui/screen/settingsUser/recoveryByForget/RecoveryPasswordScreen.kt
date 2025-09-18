@@ -28,7 +28,7 @@ import com.tramites1cero1.tramiappquibdo.ui.screen.settingsUser.components.InfoT
 import com.tramites1cero1.tramiappquibdo.ui.screen.settingsUser.components.ShowModalVerificationCode
 import com.tramites1cero1.tramiappquibdo.ui.theme.*
 import kotlinx.coroutines.launch
-
+import com.tramites1cero1.tramiappquibdo.R
 /* ---------- Helpers ---------- */
 fun isValidEmail(email: String): Boolean =
     email.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches()

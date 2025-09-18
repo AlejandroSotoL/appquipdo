@@ -23,7 +23,9 @@ import com.tramites1cero1.tramiappquibdo.ui.navigation.slideOutToLeft
 import com.tramites1cero1.tramiappquibdo.ui.screen.VenuesScreen
 import com.tramites1cero1.tramiappquibdo.ui.screen.courses.CoursesScreen
 import com.tramites1cero1.tramiappquibdo.ui.screen.history.HistoryPayScreen
+import com.tramites1cero1.tramiappquibdo.ui.screen.initial.SelectMunViewModel
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.MainScreen
+import com.tramites1cero1.tramiappquibdo.ui.screen.main.MainViewModel
 import com.tramites1cero1.tramiappquibdo.ui.screen.settingsUser.UserSettingsScreen
 import com.tramites1cero1.tramiappquibdo.ui.screen.venues.VenuesViewModel
 

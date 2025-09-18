@@ -81,12 +81,12 @@ import com.tramites1cero1.tramiappquibdo.ui.theme.White
 import com.tramites1cero1.tramiappquibdo.ui.theme.buttoncolorslogin
 import com.tramites1cero1.tramiappquibdo.ui.theme.primarycolor
 import kotlinx.coroutines.launch
+import com.tramites1cero1.tramiappquibdo.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectMunScreen(
     navController: NavController,
-    municipalityViewModel: MunicipalityViewModel,
     authViewModel: AuthViewModel = hiltViewModel(),
     loginViewModel: LoginOptionsViewModel = hiltViewModel(),
     viewModel: SelectMunViewModel = hiltViewModel(),
@@ -282,9 +282,9 @@ fun SelectMunScreen(
                         Button(
                             onClick = {
                                 viewModel.onContinueClicked()
-                                municipalityViewModel.loadMunicipalityData(
-                                    state.selectedMunicipality?.id ?: 0
-                                )
+//                                municipalityViewModel.loadMunicipalityData(
+//                                    state.selectedMunicipality?.id ?: 0
+//                                )
                             },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFF2196F3),

@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.tramites1cero1.tramiappquibdo.MunicipalityViewModel
 import com.tramites1cero1.tramiappquibdo.ui.navigation.graphs.PublicServiceNavGraph
 import com.tramites1cero1.tramiappquibdo.ui.navigation.graphs.initialNavGraph
 import com.tramites1cero1.tramiappquibdo.ui.navigation.graphs.mainNavGraph
@@ -26,8 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tramites1cero1.tramiappquibdo.MunicipalityUiState
+import com.tramites1cero1.tramiappquibdo.MunicipalityViewModel
 import com.tramites1cero1.tramiappquibdo.ui.navigation.graphs.pqrdsNavGraph
 import com.tramites1cero1.tramiappquibdo.ui.navigation.graphs.psvNavGraph
+import com.tramites1cero1.tramiappquibdo.ui.screen.initial.SelectMunViewModel
+import com.tramites1cero1.tramiappquibdo.ui.screen.main.MainViewModel
+
 import com.tramites1cero1.tramiappquibdo.ui.screen.pqrds.PqrdsViewModel
 import com.tramites1cero1.tramiappquibdo.ui.theme.AlcaldiasTheme
 import com.tramites1cero1.tramiappquibdo.ui.theme.primarycolor
@@ -68,7 +71,7 @@ fun AppNavHost(isDark: Boolean, navController: NavHostController, startDestinati
                     popEnterTransition = { slideInHorizontally(initialOffsetX = { -1000 }, animationSpec = tween(300)) },
                     popExitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }, animationSpec = tween(300)) }
                 ) {
-                    initialNavGraph(navController, munViewModel)
+
                     mainNavGraph(navController, munViewModel)
                     newsNavGraph(navController, escudoUrl = escudoUrl, nombreAlcaldia = nombreAlcaldia, newsUrl = newsUrl)
                     paymentsNavGraph(navController)

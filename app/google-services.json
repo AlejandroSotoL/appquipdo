@@ -1,0 +1,250 @@
+{
+  "project_info": {
+    "project_number": "976285812023",
+    "project_id": "grupo-2025",
+    "storage_bucket": "grupo-2025.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976285812023:android:c948dfa1a16aad8f1e86b2",
+        "android_client_info": {
+          "package_name": "com.tramites.alcaldiademistrato"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976285812023-n74tjcur4s8n7qha3lk4tu65m2ddofl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3_EdXcjxlTI1j5ueDv9-qsHjVQ1No9h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976285812023-jsg3cisbavo04dc1r9bjok6ja39hkk32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976285812023:android:da8d942a8bd33a6d1e86b2",
+        "android_client_info": {
+          "package_name": "com.tramites.alcaldiadepitalito"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976285812023-n74tjcur4s8n7qha3lk4tu65m2ddofl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3_EdXcjxlTI1j5ueDv9-qsHjVQ1No9h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976285812023-jsg3cisbavo04dc1r9bjok6ja39hkk32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976285812023:android:cb26edc098a141ea1e86b2",
+        "android_client_info": {
+          "package_name": "com.tramites.alcaldiadequibdo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976285812023-n74tjcur4s8n7qha3lk4tu65m2ddofl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3_EdXcjxlTI1j5ueDv9-qsHjVQ1No9h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976285812023-jsg3cisbavo04dc1r9bjok6ja39hkk32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976285812023:android:a317d13c058f43be1e86b2",
+        "android_client_info": {
+          "package_name": "com.tramites.alcaldiadesevilla"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976285812023-n74tjcur4s8n7qha3lk4tu65m2ddofl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3_EdXcjxlTI1j5ueDv9-qsHjVQ1No9h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976285812023-jsg3cisbavo04dc1r9bjok6ja39hkk32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976285812023:android:402ac7e766f0b3281e86b2",
+        "android_client_info": {
+          "package_name": "com.tramites.alcaldiadesoacha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976285812023-n74tjcur4s8n7qha3lk4tu65m2ddofl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3_EdXcjxlTI1j5ueDv9-qsHjVQ1No9h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976285812023-jsg3cisbavo04dc1r9bjok6ja39hkk32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976285812023:android:0b7a94f86895a9331e86b2",
+        "android_client_info": {
+          "package_name": "com.tramites.alcaldiadevilladeleyva"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976285812023-n74tjcur4s8n7qha3lk4tu65m2ddofl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3_EdXcjxlTI1j5ueDv9-qsHjVQ1No9h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976285812023-jsg3cisbavo04dc1r9bjok6ja39hkk32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976285812023:android:247ce024ee11d14b1e86b2",
+        "android_client_info": {
+          "package_name": "com.tramites.parquearvi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976285812023-n74tjcur4s8n7qha3lk4tu65m2ddofl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3_EdXcjxlTI1j5ueDv9-qsHjVQ1No9h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976285812023-jsg3cisbavo04dc1r9bjok6ja39hkk32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976285812023:android:207dc8779690ac201e86b2",
+        "android_client_info": {
+          "package_name": "com.tramites1cero1.tramiappquibdo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976285812023-0jftqdtskhf7k5l04v6ng6jbcb24432k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tramites1cero1.tramiappquibdo",
+            "certificate_hash": "c0d092780a4d7d284e9cc4c07e40f093adbb2d16"
+          }
+        },
+        {
+          "client_id": "976285812023-n74tjcur4s8n7qha3lk4tu65m2ddofl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3_EdXcjxlTI1j5ueDv9-qsHjVQ1No9h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976285812023-jsg3cisbavo04dc1r9bjok6ja39hkk32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

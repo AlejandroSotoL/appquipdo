@@ -1,11 +1,11 @@
 <resources>
 
     <string name="default_web_client_id">
-        577349260806-lue88id0k4allkri4540q6c33geogl9e.apps.googleusercontent.com
+        976285812023-0jftqdtskhf7k5l04v6ng6jbcb24432k.apps.googleusercontent.com
     </string>
 
 
-    <string name="app_name">Trami App Municipios</string>
+    <string name="app_name">Trami App quibdó</string>
 
     <string-array name="lisdptos">
         <item>Santander</item>
