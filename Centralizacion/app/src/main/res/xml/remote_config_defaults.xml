@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <defaultsMap>
+        <entry>
+            <key>welcome_carousel_images</key>
+            <value>
+                {
+                "images": [
+                {
+                "imageUrl": "http://192.168.20.198:10207/Images/imgfintech1.png",
+                "clickUrl": "https://101fintech.com/"
+                },
+                {
+                "imageUrl": "http://192.168.20.198:10207/Images/imgfintech2.png",
+                "clickUrl": "https://101fintech.com/"
+                },
+                {
+                "imageUrl": "http://192.168.20.198:10207/Images/imgfintech3.png",
+                "clickUrl": "https://101fintech.com/"
+                }
+                ]
+                }
+            </value>
+        </entry>
+    </defaultsMap>
+
+</resources>
