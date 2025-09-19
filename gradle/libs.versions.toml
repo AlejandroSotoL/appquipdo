@@ -1,0 +1,175 @@
+[versions]
+# --- Plugins ---
+agp = "8.10.1"
+core = "3.5.2"
+espressoCore = "3.7.0"
+glide = "4.16.0"
+jsoup = "1.17.2"
+junit = "4.13.2"
+junitVersion = "1.3.0"
+kotlin = "2.0.0"
+
+# --- A-Z ---
+accompanistPermissions = "0.34.0"
+activity = "1.10.1"
+appcompat = "1.7.0"
+barcodeScanning = "17.3.0"
+browser = "1.8.0"
+cameraX = "1.4.2" # Versión unificada para todas las librerías de CameraX
+coil = "2.5.0" # Versión unificada para Coil
+constraintlayout = "2.2.1"
+converterGson = "2.11.0"
+coreKtx = "1.16.0"
+datastorePreferences = "1.1.7"
+firebaseBom = "33.7.0"
+kotlinxCoroutines = "1.9.0"
+kotlinxSerializationJson = "1.7.3"
+lifecycle = "2.9.2"
+loggingInterceptor = "5.0.0-alpha.2"
+material = "1.12.0"
+media3CommonKtx = "1.7.1"
+navigationCompose = "2.9.2"
+playServicesAuth = "21.3.0"
+playServicesLocation = "21.3.0"
+retrofit = "2.11.0"
+runtimeLivedata = "1.8.3"
+webkit = "1.14.0"
+
+hilt = "2.51.1" # Versión actual de Hilt
+hiltNavigationCompose = "1.2.0"
+ksp = "2.0.0-1.0.21"
+benchmarkTraceprocessorAndroid = "1.4.0" # Versión de KSP compatible con tu versión de Kotlin
+zxingAndroidEmbedded = "4.3.0"
+appUpdateKtx = "2.1.0"
+foundationLayout = "1.9.1"
+foundation = "1.9.1"
+
+
+[libraries]
+# --- Accompanist ---
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
+
+# --- AndroidX Core & Lifecycle ---
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtimeLivedata" }
+androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }
+
+# --- AndroidX UI & Compose (versiones gestionadas por el BOM) ---
+androidx-adaptive = { module = "androidx.compose.material3.adaptive:adaptive" }
+androidx-foundation = { module = "androidx.compose.foundation:foundation" }
+androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core" }
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
+androidx-material3 = { module = "androidx.compose.material3:material3" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-ui = { module = "androidx.compose.ui:ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-ui-viewbinding = { module = "androidx.compose.ui:ui-viewbinding" }
+androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+
+# --- AndroidX Camera ---
+androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraX" }
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraX" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraX" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraX" }
+androidx-camera-extensions = { module = "androidx.camera:camera-extensions", version.ref = "cameraX" }
+
+# --- Firebase & Google ---
+core = { module = "com.google.zxing:core", version.ref = "core" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" } # Sin versión, gestionada por el BOM
+firebase-config = { module = "com.google.firebase:firebase-config-ktx" }
+
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
+junit = { module = "junit:junit", version.ref = "junit" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "barcodeScanning" }
+
+# --- Coroutines ---
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutines" }
+
+# --- Networking ---
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
+
+# --- Utilidades ---
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-media3-common-ktx = { group = "androidx.media3", name = "media3-common-ktx", version.ref = "media3CommonKtx" }
+
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+androidx-benchmark-traceprocessor-android = { group = "androidx.benchmark", name = "benchmark-traceprocessor-android", version.ref = "benchmarkTraceprocessorAndroid" }
+zxing-android-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "zxingAndroidEmbedded" }
+app-update-ktx = { group = "com.google.android.play", name = "app-update-ktx", version.ref = "appUpdateKtx" }
+androidx-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
+foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
+
+
+
+[bundles]
+# Bundle para las librerías principales de Coroutines
+coroutines = [
+    "kotlinx-coroutines-core",
+    "kotlinx-coroutines-android",
+    "kotlinx-coroutines-play-services"]
+
+# Bundle para las librerías de Lifecycle
+lifecycle = [
+    "androidx-lifecycle-runtime-ktx",
+    "androidx-lifecycle-viewmodel-ktx",
+    "androidx-lifecycle-viewmodel-compose"]
+
+# Bundle para las librerías de Compose UI (las que no son de testing)
+compose-ui = [
+    "androidx-ui", "androidx-ui-graphics",
+    "androidx-ui-tooling-preview", "androidx-foundation",
+    "androidx-material3",
+    "androidx-material-icons-core",
+    "androidx-material-icons-extended",
+    "androidx-adaptive",
+    "androidx-navigation-compose"]
+
+# Bundle para las librerías de CameraX
+camera = [
+    "androidx-camera-extensions",
+    "androidx-camera-core",
+    "androidx-camera-camera2",
+    "androidx-camera-lifecycle",
+    "androidx-camera-view"]
+
+# Bundle para las librerías de Retrofit
+retrofit = ["retrofit", "converter-gson", "logging-interceptor"]
+
+# Bundle para las librerías de Coil
+coil = ["coil-compose", "coil-gif"]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+

@@ -1,0 +1,92 @@
+{
+  "project_info": {
+    "project_number": "577349260806",
+    "project_id": "betaappcentralizate",
+    "storage_bucket": "betaappcentralizate.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577349260806:android:20237044d92abe37ff1587",
+        "android_client_info": {
+          "package_name": "com.tramites.betaappcentralizacion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "577349260806-puimeksdlgpiosmmt9e38tpli3nht1rs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tramites.betaappcentralizacion",
+            "certificate_hash": "6e33203b27603bc1b4d16171190de997e7be0ed6"
+          }
+        },
+        {
+          "client_id": "577349260806-r9e7vm4sauc66uf1h9tuv1iqa63q5j60.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0hntdf8WSq_8I2S7e0bCRqQjCwpRV_vs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "577349260806-7d841co5uhtp4470070rpguen7cv4vds.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577349260806:android:0705c3ebc40d159bff1587",
+        "android_client_info": {
+          "package_name": "com.tramites1cero1.centralizacion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "577349260806-b61jbqu9r42hlneofn3b89c3unuq11pu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tramites1cero1.centralizacion",
+            "certificate_hash": "1e414bbc847e2b817d3dcf6dc6ab7888866c3dcb"
+          }
+        },
+        {
+          "client_id": "577349260806-lue88id0k4allkri4540q6c33geogl9e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tramites1cero1.centralizacion",
+            "certificate_hash": "9f36b711a0195519b4cef4243971193a1a76abba"
+          }
+        },
+        {
+          "client_id": "577349260806-r9e7vm4sauc66uf1h9tuv1iqa63q5j60.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0hntdf8WSq_8I2S7e0bCRqQjCwpRV_vs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "577349260806-7d841co5uhtp4470070rpguen7cv4vds.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
