@@ -1,0 +1,3 @@
+[submodule "Centralizacion"]
+	path = Centralizacion
+	url = https://github.com/desarrollofasemovil/Centralizacion.git
