@@ -1,5 +1,6 @@
 package com.tramites1cero1.tramiappquibdo.ui.screen.main
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
@@ -15,10 +16,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
@@ -64,7 +67,6 @@ import com.tramites1cero1.tramiappquibdo.R
 import com.tramites1cero1.tramiappquibdo.domain.model.TramiteAccion
 import com.tramites1cero1.tramiappquibdo.ui.components.FooterSponsors
 import com.tramites1cero1.tramiappquibdo.ui.navigation.AppRoutes
-import com.tramites1cero1.tramiappquibdo.ui.screen.initial.SelectMunViewModel
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.components.BottomNavBar
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.components.BottomNavBarActions
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.components.ConfirmExitDialog
@@ -108,7 +110,7 @@ fun MainScreen(
     val activity = (context as? Activity)
 
     val locationPermissionState = rememberPermissionState(
-        android.Manifest.permission.ACCESS_FINE_LOCATION
+        Manifest.permission.ACCESS_FINE_LOCATION
     )
 
     LaunchedEffect(Unit) {
@@ -256,10 +258,13 @@ fun MainScreen(
                 ModalNavigationDrawer(
                     drawerState = drawerState,
                     drawerContent = {
-                        ModalDrawerSheet {
+                        ModalDrawerSheet(windowInsets = WindowInsets(0)) {
                             MainSideMenuOptions(
                                 state = sideMenuState,
-                                actions = sideMenuActions
+                                actions = sideMenuActions,
+                                navController = navController,
+                                design = municipalityData.design,
+                                departamento = municipalityData.departamento
                             )
                         }
                     }
@@ -284,6 +289,7 @@ fun MainScreen(
                             MainHeader(
                                 design = municipalityData.design
                             , departamento = municipalityData.departamento)
+
                             if (!state.isPqrdVisible) {
                                 LazyColumn(
                                     modifier = Modifier

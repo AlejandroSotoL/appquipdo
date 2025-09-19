@@ -93,7 +93,7 @@ fun TramitesSection(
                 BasicTextField(
                     value = state.searchText,
                     onValueChange = actions.onSearchTextChanged,
-                    textStyle = TextStyle(color = Color.White, fontFamily = RobotoBold, fontSize = 18.sp),
+                    textStyle = TextStyle(color = MaterialTheme.colorScheme.onSecondary, fontFamily = RobotoBold, fontSize = 18.sp),
                     cursorBrush = SolidColor(MaterialTheme.colorScheme.onPrimary),
                     singleLine = true,
                     modifier = Modifier

@@ -286,7 +286,7 @@ fun SignUpThreeScreen(
                             navController = navController,
                             onLoginSuccess = {
                                 showLoginFormSheet = false
-                                navController.navigate(AppRoutes.INITIAL_NAV_GRAPH)
+                                navController.navigate(AppRoutes.MAIN_NAV_GRAPH)
                             }
                         )
                     }
@@ -295,7 +295,7 @@ fun SignUpThreeScreen(
                     onClick = {
                         viewModel.onFinishClicked()
                         if (FirebaseAuth.getInstance().currentUser != null) {
-                            navController.navigate(AppRoutes.INITIAL_NAV_GRAPH)
+                            navController.navigate(AppRoutes.MAIN_NAV_GRAPH)
                         }
                               },
                     modifier = Modifier

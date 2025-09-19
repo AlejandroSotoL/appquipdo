@@ -26,10 +26,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tramites1cero1.tramiappquibdo.MunicipalityUiState
 import com.tramites1cero1.tramiappquibdo.MunicipalityViewModel
+import com.tramites1cero1.tramiappquibdo.domain.model.Design
 import com.tramites1cero1.tramiappquibdo.ui.navigation.graphs.pqrdsNavGraph
 import com.tramites1cero1.tramiappquibdo.ui.navigation.graphs.psvNavGraph
-import com.tramites1cero1.tramiappquibdo.ui.screen.initial.SelectMunViewModel
-import com.tramites1cero1.tramiappquibdo.ui.screen.main.MainViewModel
 
 import com.tramites1cero1.tramiappquibdo.ui.screen.pqrds.PqrdsViewModel
 import com.tramites1cero1.tramiappquibdo.ui.theme.AlcaldiasTheme
@@ -58,6 +57,7 @@ fun AppNavHost(isDark: Boolean, navController: NavHostController, startDestinati
             val nombreAlcaldia = state.data.nombreMunicipio
             val escudoUrl = state.data.design.escudoUrl
             val newsUrl = state.data.newsUrl
+            val deparment = state.data.departamento
 
             AlcaldiasTheme(
                 design = design,
@@ -74,7 +74,7 @@ fun AppNavHost(isDark: Boolean, navController: NavHostController, startDestinati
 
                     mainNavGraph(navController, munViewModel)
                     newsNavGraph(navController, escudoUrl = escudoUrl, nombreAlcaldia = nombreAlcaldia, newsUrl = newsUrl)
-                    paymentsNavGraph(navController)
+                    paymentsNavGraph(navController, design, deparment )
                     PublicServiceNavGraph(navController, munViewModel)
                     signUpNavGraph(navController)
                     pqrdsNavGraph(navController, pqrdsViewModel, codigoEntidad = state.data.codigoEntidad)
@@ -91,7 +91,7 @@ fun AppNavHost(isDark: Boolean, navController: NavHostController, startDestinati
                 startDestination = startDestination
             ) {
                 mainNavGraph(navController, munViewModel)
-                paymentsNavGraph(navController)
+                paymentsNavGraph(navController, design  = Design(), deparment = "")
                 newsNavGraph(navController, escudoUrl = "", nombreAlcaldia = "", newsUrl = "")
                 PublicServiceNavGraph(navController, munViewModel)
                 initialNavGraph(navController, munViewModel)
