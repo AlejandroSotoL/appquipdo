@@ -175,6 +175,10 @@ class MainViewModel @Inject constructor(
             _uiState.update { it.copy(showInDevelopmentDialog = true) }
             return
         }
+        if (tramite.idtramite == 5) {
+            _uiState.update { it.copy(showInDevelopmentDialog = true) }
+            return
+        }
         viewModelScope.launch {
             when (val accion = tramite.accion) {
                 is TramiteAccion.ShowPqrds -> {

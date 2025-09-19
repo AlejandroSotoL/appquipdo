@@ -25,6 +25,8 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
+import com.tramites1cero1.tramiappquibdo.domain.model.Design
 import com.tramites1cero1.tramiappquibdo.domain.model.Tax
 import com.tramites1cero1.tramiappquibdo.ui.components.PolicyCheckboxes
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.MainViewModel
@@ -43,6 +45,9 @@ fun TaxQueryScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
     onCancel: () -> Unit,
     onQuerySuccess: (taxes: List<Tax>, email: String) -> Unit,
+    navController: NavController,
+    design: Design,
+    departamento: String
 ) {
 
     val state by taxQueryviewModel.uiState.collectAsStateWithLifecycle()
@@ -93,7 +98,10 @@ fun TaxQueryScreen(
                 )
                 MainSideMenuOptions(
                     state = sideMenuState,
-                    actions = sideMenuActions
+                    actions = sideMenuActions,
+                    navController = navController,
+                    design = design,
+                    departamento = departamento
                 )
             }
         }

@@ -1,5 +1,7 @@
 package com.tramites1cero1.tramiappquibdo.ui.navigation.graphs
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.*
 import androidx.navigation.compose.composable
@@ -10,6 +12,7 @@ import androidx.compose.ui.graphics.toArgb
 import com.tramites1cero1.tramiappquibdo.ui.screen.taxpayments.TaxQueryScreen
 import com.tramites1cero1.tramiappquibdo.ui.screen.taxpayments.TaxResultsScreen
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.tramites1cero1.tramiappquibdo.domain.model.Design
 import com.tramites1cero1.tramiappquibdo.ui.navigation.slideInFromLeft
 import com.tramites1cero1.tramiappquibdo.ui.navigation.slideInFromRight
 import com.tramites1cero1.tramiappquibdo.ui.navigation.slideOutToLeft
@@ -19,7 +22,12 @@ import com.tramites1cero1.tramiappquibdo.ui.screen.taxpayments.TaxResultsViewMod
 import com.tramites1cero1.tramiappquibdo.utils.abrirURL
 
 
-fun NavGraphBuilder.paymentsNavGraph(navController: NavController) {
+@RequiresApi(Build.VERSION_CODES.O)
+fun NavGraphBuilder.paymentsNavGraph(
+    navController: NavController,
+    design: Design,
+    deparment: String
+) {
     navigation(
         startDestination = AppRoutes.TAX_QUERY_SCREEN,
         route = AppRoutes.PAYMENTS_NAV_GRAPH
@@ -50,7 +58,10 @@ fun NavGraphBuilder.paymentsNavGraph(navController: NavController) {
                     navController.currentBackStackEntry?.savedStateHandle?.set("taxes", ArrayList(taxes))
                     navController.currentBackStackEntry?.savedStateHandle?.set("email", email)
                     navController.navigate(AppRoutes.TAX_RESULTS_SCREEN)
-                }
+                },
+                navController = navController,
+                design = design,
+                departamento = deparment
             )
         }
 
