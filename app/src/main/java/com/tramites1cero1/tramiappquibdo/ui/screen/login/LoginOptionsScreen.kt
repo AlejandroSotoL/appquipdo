@@ -215,17 +215,7 @@ fun LoginOptionsScreen(
         ) {
             Row(modifier = Modifier.height(30.dp),
                 verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(R.drawable.icobancolombia),
-                    contentDescription = "Logo Bancolombia",
-                    tint = Gray900,
-                    modifier = Modifier.size(115.dp)
-                )
-                VerticalDivider(
-                    modifier = Modifier.padding(horizontal = 12.dp), // Optional padding
-                    thickness = 1.dp, // Line thickness
-                    color = Gray900 // Line color
-                )
+
                 Icon(
                     painter = painterResource(R.drawable.ico101software),
                     contentDescription = "Logo Software",
