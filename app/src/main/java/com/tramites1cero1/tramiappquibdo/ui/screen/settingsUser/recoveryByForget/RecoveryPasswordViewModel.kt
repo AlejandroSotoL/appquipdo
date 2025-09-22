@@ -14,11 +14,14 @@ import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
+import com.tramites1cero1.tramiappquibdo.domain.repository.UserPreferencesRepository
+import java.util.concurrent.TimeUnit
 
 @HiltViewModel
 class RecoveryPasswordViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val sendEmailRepository: SendEmailRepository,
+    private val preferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     private val _uiState = mutableStateOf(RecoveryPasswordUiState())
@@ -61,15 +64,16 @@ class RecoveryPasswordViewModel @Inject constructor(
                     sendCodeResponse = sendCodeResult,
                     showCodeSheet = true,
                     codeValidationResponse = ValidationResponseExtraDto(
-                        extraData =  validationCode
+                        extraData = validationCode
                     )
                 )
-
+                return@launch
             } catch (ex: TimeoutCancellationException) {
                 _uiState.value = _uiState.value.copy(
                     errorMessage = "El servidor tardó demasiado en responder. Intenta nuevamente más tarde.",
                     showCodeSheet = false
                 )
+                authRepository.clearUserSession()
             } catch (ex: Exception) {
                 authRepository.clearUserSession()
                 _uiState.value = _uiState.value.copy(
@@ -85,19 +89,60 @@ class RecoveryPasswordViewModel @Inject constructor(
         }
     }
 
-    fun onModalCloseWithoutCompleting(){
-        try{
-            viewModelScope.launch {
-                authRepository.clearUserSession()
-            }
-        }catch (e: Exception){
-            _uiState.value = _uiState.value.copy(
-                sendCodeResponse = ValidationResponseExtraDto(
-                    booleanStatus = false,
-                    sentencesError = "Tenemos problemas de red: ${e.message}"
-                ),
+    fun controlRequestToSendEmail() {
+        val currentTime = System.currentTimeMillis()
+        val remainingRequests = _uiState.value.numbersOfRequests
+        if (remainingRequests <= 1) {
+            _uiState.value = _uiState.value.copy( isBloquedBotton = true,
                 showCodeSheet = false
             )
+            viewModelScope.launch {
+                preferencesRepository.saveTimeBloquedSend_Email(currentTime)
+            }
+        } else {
+            _uiState.value = _uiState.value.copy(numbersOfRequests = remainingRequests - 1)
+        }
+    }
+
+    fun checkIfCanUnblock() {
+        viewModelScope.launch {
+            val timeSaved = preferencesRepository.getTimeBloquedSend_Email()
+            if (timeSaved != null) {
+                val fiveMinutesInMillis = TimeUnit.MINUTES.toMillis(5)
+                val currentTime = System.currentTimeMillis()
+                val diff = currentTime - timeSaved
+
+                if (diff >= fiveMinutesInMillis) {
+                    _uiState.value = _uiState.value.copy(
+                        isBloquedBotton = false,
+                        numbersOfRequests = 3,
+                        errorMessage = null
+                    )
+                    preferencesRepository.clearTimeBloquedSend_Email()
+                    return@launch
+                } else {
+                    _uiState.value = _uiState.value.copy(
+                        isBloquedBotton = true,
+                    )
+                    return@launch
+                }
+            }
+        }
+    }
+
+
+    fun onModalCloseWithoutCompleting() {
+        _uiState.value = _uiState.value.copy(showCodeSheet = false)
+
+        viewModelScope.launch {
+            try {
+                authRepository.clearUserSession()
+            } catch (e: Exception) {
+                Log.e("ViewModel", "Error al limpiar la sesión: ${e.message}")
+                _uiState.value = _uiState.value.copy(
+                    errorMessage = "Error al cerrar sesión: ${e.message}"
+                )
+            }
         }
     }
 
@@ -120,7 +165,8 @@ class RecoveryPasswordViewModel @Inject constructor(
                         errorMessage = "El código ingresado no es correcto.",
                         isCodeError = true,
                         attempts = _uiState.value.attempts + 1,
-                        loading = false
+                        loading = false,
+                        showCodeSheet = false
                     )
                     return@launch
                 }

@@ -20,6 +20,7 @@ object RetrofitClient {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
             .build()
             .create(serviceClass)
     }

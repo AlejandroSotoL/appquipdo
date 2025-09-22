@@ -123,25 +123,46 @@ fun ChangeOnlyPasswordScreen(
 
                 Button(
                     onClick = {
-                        if (newPassword != confirmPassword) {
-                            error = "Las contraseñas no coinciden"
-                        } else {
-                            error = ""
-                            user?.let { currentUser ->
-                                isLoading = true
-                                coroutineScope.launch {
-                                    val response = settingVm.updatePasswordByForget(
-                                        currentUser.id,
-                                        request = UpdatePasswordByForgetDto(newPassword = newPassword)
-                                    )
-                                    if (response.booleanStatus) {
-                                        authVm.clearUserData(currentUser.id, false)
-                                        forceShowSheet = true
-                                        showSheet = true
-                                        newPassword = ""
-                                        confirmPassword = ""
+                        error = ""
+                        when {
+                            newPassword.isBlank() -> {
+                                error = "El campo no puede estar vacío"
+                            }
+                            newPassword.length < 8 -> {
+                                error = "Debe tener mínimo 8 caracteres"
+                            }
+                            !newPassword.any { it.isDigit() } -> {
+                                error = "Debe incluir al menos un número"
+                            }
+                            !newPassword.any { it.isUpperCase() } -> {
+                                error = "Debe incluir al menos una mayúscula"
+                            }
+                            !newPassword.any { it.isLowerCase() } -> {
+                                error = "Debe incluir al menos una minúscula"
+                            }
+                            !newPassword.any { "!@#\$%^&+=¿?*._-".contains(it) } -> {
+                                error = "Debe incluir al menos un carácter especial"
+                            }
+                            newPassword != confirmPassword -> {
+                                error = "Las contraseñas no coinciden"
+                            }
+                            else -> {
+                                user?.let { currentUser ->
+                                    isLoading = true
+                                    coroutineScope.launch {
+                                        val response = settingVm.updatePasswordByForget(
+                                            currentUser.id,
+                                            request = UpdatePasswordByForgetDto(newPassword = newPassword)
+                                        )
+                                        if (response.booleanStatus) {
+                                            authVm.clearUserData(currentUser.id, false)
+                                            forceShowSheet = true
+                                            showSheet = true
+                                            newPassword = ""
+                                            confirmPassword = ""
+                                        }
+                                        isLoading = false
                                     }
-                                    isLoading = false
                                 }
                             }
                         }
@@ -160,8 +181,7 @@ fun ChangeOnlyPasswordScreen(
                             color = White
                         )
                     } else {
-                        Text("Finalizar",
-                            style = MaterialTheme.typography.headlineSmall)
+                        Text("Finalizar", style = MaterialTheme.typography.headlineSmall)
                     }
                 }
             }
@@ -239,11 +259,10 @@ fun ChangeOnlyPasswordScreen(
             sheetState = sheetState,
             onDismissRequest = {
                 coroutineScope.launch {
-                    sheetState.hide()
-                    showSheet = false
+                    sheetState.show()
                 }
             },
-            containerColor = bottomSheetsColor
+            containerColor = Gray300,
         ) {
             AuthScreen(
                 navController = navController,
@@ -253,9 +272,7 @@ fun ChangeOnlyPasswordScreen(
                         showSheet = false
 
                         navController.navigate(AppRoutes.INITIAL_NAV_GRAPH) {
-                            popUpTo(AppRoutes.CONFIGURATIONS_USER_SCREEN) {
-                                inclusive = true
-                            }
+                            popUpTo(AppRoutes.CONFIGURATIONS_USER_SCREEN) { inclusive = true }
                             launchSingleTop = true
                         }
                     }

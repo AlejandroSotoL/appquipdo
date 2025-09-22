@@ -1,5 +1,7 @@
 package com.tramites1cero1.tramiappquibdo.ui.screen.login
 
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tramites1cero1.tramiappquibdo.data.model.LoginDTO
@@ -107,15 +109,6 @@ class AuthViewModel @Inject constructor(
 //                                    )
 //                                }
 //                            }
-                            _uiState.update {
-                                it.copy(
-                                    response = ValidationResponseDTO(
-                                        sentencesError = "Inicio de sesión exitoso",
-                                        booleanStatus = true
-                                    ),
-                                    isLogginIn = true
-                                )
-                            }
                             _eventFlow.emit(AuthEvents.OnLogin)
                         }
                         .onFailure {

@@ -14,6 +14,7 @@ import com.tramites1cero1.tramiappquibdo.ui.navigation.slideOutToLeft
 import com.tramites1cero1.tramiappquibdo.ui.navigation.slideOutToRight
 import com.tramites1cero1.tramiappquibdo.ui.screen.news.NewsDetailsScreen
 import com.tramites1cero1.tramiappquibdo.ui.screen.news.NewsScreen
+import com.tramites1cero1.tramiappquibdo.utils.webview
 
 
 fun NavGraphBuilder.newsNavGraph(
@@ -25,31 +26,39 @@ fun NavGraphBuilder.newsNavGraph(
         startDestination = AppRoutes.NEWS_SCREEN,
         route = AppRoutes.NEWS_NAV_GRAPH
     ) {
-        composable(AppRoutes.NEWS_SCREEN,
-            enterTransition = { slideInFromRight() },
-            popExitTransition = { slideOutToRight() },
 
-            exitTransition = { slideOutToLeft() },
-            popEnterTransition = { slideInFromLeft() },
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NewsScreen(navController = navController,
-                    escudoUrl = escudoUrl,
-                    nombreAlcaldia = nombreAlcaldia,
-                    newsUrl = newsUrl)
-            }
-        }
-
-        // Pantalla de Cursos
-        composable(
-            route = "${AppRoutes.NEWS_DETAILS_SCREEN}" + "/{noticiaId}?baseUrl={baseUrl}",
-            arguments = listOf(
-                navArgument("noticiaId") { type = NavType.IntType },
-                navArgument("baseUrl") { type = NavType.StringType }
+        composable(AppRoutes.NEWS_SCREEN){
+            webview(
+                navController = navController,
+                url = newsUrl,
+                titulo = "Noticias $nombreAlcaldia "
             )
-        ) { backStackEntry ->
-            NewsDetailsScreen(navController = navController)
         }
+//        composable(AppRoutes.NEWS_SCREEN,
+//            enterTransition = { slideInFromRight() },
+//            popExitTransition = { slideOutToRight() },
+//
+//            exitTransition = { slideOutToLeft() },
+//            popEnterTransition = { slideInFromLeft() },
+//        ) {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                NewsScreen(navController = navController,
+//                    escudoUrl = escudoUrl,
+//                    nombreAlcaldia = nombreAlcaldia,
+//                    newsUrl = newsUrl)
+//            }
+//        }
+//
+//        // Pantalla de Cursos
+//        composable(
+//            route = "${AppRoutes.NEWS_DETAILS_SCREEN}" + "/{noticiaId}?baseUrl={baseUrl}",
+//            arguments = listOf(
+//                navArgument("noticiaId") { type = NavType.IntType },
+//                navArgument("baseUrl") { type = NavType.StringType }
+//            )
+//        ) { backStackEntry ->
+//            NewsDetailsScreen(navController = navController)
+//        }
 
     }
 }

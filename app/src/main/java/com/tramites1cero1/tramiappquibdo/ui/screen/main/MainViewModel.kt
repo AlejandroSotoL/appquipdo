@@ -356,7 +356,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             val currentStateSave = _uiState.value.isSaved
             if(!currentStateSave){
-                _event.send(NavigateToWelcome)
+                _event.send(FinishApp)
             }else {
                 _event.send(FinishApp)
             }

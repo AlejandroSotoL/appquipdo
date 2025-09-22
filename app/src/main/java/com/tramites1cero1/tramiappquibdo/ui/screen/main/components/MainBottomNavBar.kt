@@ -38,7 +38,7 @@ enum class Destination(
     MAIN(AppRoutes.MAINSCREEN, "Inicio", R.drawable.icohome, "Menu"),
     NEWS(AppRoutes.NEWS_SCREEN, "Noticias", R.drawable.iconoticias, "Noticias"),
     PORTAL("portalWeb", "Portal", R.drawable.icoportal, "Portal Web"),
-    HISTORIAL(AppRoutes.HISTORY_PAY_SCREEN, "Historial", R.drawable.icohistorial, "Historial")
+//    HISTORIAL(AppRoutes.HISTORY_PAY_SCREEN, "Historial", R.drawable.icohistorial, "Historial")
 }
 
 data class BottomNavItem(

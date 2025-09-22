@@ -71,7 +71,9 @@ import com.tramites1cero1.tramiappquibdo.ui.theme.RobotoBold
 import com.tramites1cero1.tramiappquibdo.ui.theme.White
 import com.tramites1cero1.tramiappquibdo.ui.theme.primarycolor
 import kotlinx.coroutines.delay
-
+import androidx.compose.runtime.rememberCoroutineScope
+import com.tramites1cero1.tramiappquibdo.ui.theme.Gray300
+import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpThreeScreen(
@@ -85,7 +87,7 @@ fun SignUpThreeScreen(
     val scroll = rememberScrollState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showLoginFormSheet by rememberSaveable { mutableStateOf(false) }
-
+    val coroutineScope = rememberCoroutineScope()
 
 
     LaunchedEffect(Unit) {
@@ -253,15 +255,10 @@ fun SignUpThreeScreen(
                 val context = LocalContext.current
 
                 scanningLogIn?.let { info ->
-                    Text(
-                        text = info.sentencesError ?: "Sin error",
-                        color = Color.White
-                    )
-
                     LaunchedEffect(key1 = info) {
                         Toast.makeText(
                             context,
-                            "Inicio de sesión satisfactorio. Te redirigimos al inicio de sesión.",
+                            "Registro satisfactorio\" Te redirigimos al inicio de sesión.",
                             Toast.LENGTH_LONG
                         ).show()
                         delay(1500)
@@ -271,16 +268,16 @@ fun SignUpThreeScreen(
                             showLoginFormSheet = true
                         }
                     }
-                } ?: Text(
-                    text = "No tiene información",
-                    color = Color.White
-                )
+                }
 
                 if (showLoginFormSheet) {
                     ModalBottomSheet(
-                        onDismissRequest = { showLoginFormSheet = false },
+                        onDismissRequest = { coroutineScope.launch {
+                            sheetState.show()
+                        }
+                        },
                         sheetState = sheetState,
-                        containerColor = primarycolor
+                        containerColor = Gray300
                     ) {
                         AuthScreen(
                             navController = navController,

@@ -1,6 +1,7 @@
 package com.tramites1cero1.tramiappquibdo.ui.screen.main.components
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -53,6 +54,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -74,6 +76,7 @@ import com.tramites1cero1.tramiappquibdo.ui.screen.main.MainViewModel
 import com.tramites1cero1.tramiappquibdo.ui.theme.Gray300
 import com.tramites1cero1.tramiappquibdo.ui.theme.Roboto_medium
 import com.tramites1cero1.tramiappquibdo.ui.theme.Roboto_regular
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -102,15 +105,17 @@ fun MainSideMenuOptions(
     authViewModel: AuthViewModel = hiltViewModel(),
     mainViewModel: MainViewModel = hiltViewModel(),
     loginViewModel: LoginOptionsViewModel = hiltViewModel(),
-    mainViewmodel: MainViewModel = hiltViewModel(),
     navController: NavController,
     design: Design,
     departamento: String? = null
 ){
+    val context = LocalContext.current
     var showLoginFormSheet by rememberSaveable { mutableStateOf(false) }
     var showLoginOptionsSheet by rememberSaveable { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val coroutineScope = rememberCoroutineScope()
+    var showError by remember { mutableStateOf(false) }
+    var alreadyExecuted by rememberSaveable { mutableStateOf(false) }
 
     val userInformation by authViewModel.user.collectAsState(initial = null)
     val _isError = remember { mutableStateOf<ValidationResponseDTO?>(null) }
@@ -142,16 +147,20 @@ fun MainSideMenuOptions(
             },
         )
     }
-    LaunchedEffect(userInformation) {
-        userInformation?.let { info ->
-            if (info.loginStatus) {
-                showLoginOptionsSheet = false
-            } else {
-                authViewModel.clearUserData(info.id , false);
+    LaunchedEffect(Unit) {
+        if (!alreadyExecuted) {
+            if (userInformation == null || userInformation?.loginStatus == false) {
+                authViewModel.clearUserData(userInformation?.id ?: 0, false)
                 showLoginOptionsSheet = true
+            } else {
+                showLoginOptionsSheet = false
             }
+            alreadyExecuted = true
         }
     }
+
+
+
     LaunchedEffect(Unit) {
         loginViewModel.eventFlow.collect { event ->
             when (event) {
@@ -201,7 +210,7 @@ fun MainSideMenuOptions(
             AuthScreen(
                 navController = navController,
                 onLoginSuccess = {
-
+                    showLoginFormSheet = false
                 })
         }
     }
@@ -247,6 +256,7 @@ fun MainSideMenuOptions(
                     color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.padding(bottom = 20.dp)
                 )
+
             }
         }
 
@@ -289,15 +299,24 @@ fun MainSideMenuOptions(
                 icon = { Icon(Icons.Default.ContentPaste, contentDescription = null) },
                 onClick = { /* Handle click */ },
             )
+
             _isError.value?.let { state ->
-                Text(
-                    text = state.sentencesError.toString() ?: "N/A",
-                    color = Color.Black,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth().padding(8.dp)
-                )
+                LaunchedEffect(state) {
+                    showError = true
+                    delay(5000)
+                    showError = false
+                }
+                if (showError){
+                    Text(
+                        text = state.sentencesError.toString() ?: "N/A",
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth().padding(8.dp)
+                    )
+                }
+
             }
 
             Spacer(Modifier.height(12.dp))
@@ -309,7 +328,7 @@ fun MainSideMenuOptions(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically) {
                     Button(
-                        onClick = {showLoginOptionsSheet = true},
+                        onClick = {showLoginOptionsSheet = true },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.onPrimary,
                             contentColor = MaterialTheme.colorScheme.primary,
@@ -333,7 +352,8 @@ fun MainSideMenuOptions(
                         if (id != null && id > 0) {
                             coroutineScope.launch {
                                 val result = authViewModel.clearUserData(id, false)
-                                mainViewmodel.onSaveSelectionRemiders(false)
+                                mainViewModel.onSaveSelectionRemiders(false)
+                                showLoginFormSheet = false
                                 _isError.value = result
                             }
                         } else {
@@ -375,6 +395,7 @@ fun userInfoDetails(
 ){
     val userInformation by authViewModel.user.collectAsState(initial = null)
     val _isError = remember { mutableStateOf<ValidationResponseDTO?>(null) }
+    var showError by remember { mutableStateOf(false) }
 
     //Proxima configuracion
 //    LaunchedEffect(Unit) {
@@ -426,7 +447,13 @@ fun userInfoDetails(
             HorizontalDivider()
 
             _isError.value?.let { state ->
-                if (!state.booleanStatus) {
+                LaunchedEffect(state) {
+                    showError = true
+                    delay(4000)
+                    showError = false
+                }
+
+                if (!state.booleanStatus && showError) {
                     Text(
                         text = state.sentencesError ?: "N/A",
                         color = Color.Black
