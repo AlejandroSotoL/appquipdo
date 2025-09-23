@@ -24,9 +24,7 @@ import com.tramites1cero1.tramiappquibdo.utils.abrirURL
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.paymentsNavGraph(
-    navController: NavController,
-    design: Design,
-    deparment: String
+    navController: NavController
 ) {
     navigation(
         startDestination = AppRoutes.TAX_QUERY_SCREEN,
@@ -58,10 +56,7 @@ fun NavGraphBuilder.paymentsNavGraph(
                     navController.currentBackStackEntry?.savedStateHandle?.set("taxes", ArrayList(taxes))
                     navController.currentBackStackEntry?.savedStateHandle?.set("email", email)
                     navController.navigate(AppRoutes.TAX_RESULTS_SCREEN)
-                },
-                navController = navController,
-                design = design,
-                departamento = deparment
+                }
             )
         }
 

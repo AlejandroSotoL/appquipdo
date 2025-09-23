@@ -77,7 +77,7 @@ class MainActivityViewModel @Inject constructor(
                     it.copy(
                         isLoading = false,
                         startDestination = AppRoutes.MAIN_NAV_GRAPH,
-                        municipalityId = 19,
+                        municipalityId = 5,
                         isDarkTheme = isDark
                     )
                 }

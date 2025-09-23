@@ -94,6 +94,8 @@ data class SideMenuActions(
     val onDismissDialog:() -> Unit,
     val goToSettingsUser:() -> Unit,
     val onSaveSelectionRemiders:(Boolean) -> Unit,
+    val onLoginSuccess : () -> Unit,
+    val  onLogoutSuccess : () -> Unit,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -104,15 +106,10 @@ fun MainSideMenuOptions(
     actions: SideMenuActions,
     authViewModel: AuthViewModel = hiltViewModel(),
     mainViewModel: MainViewModel = hiltViewModel(),
-    loginViewModel: LoginOptionsViewModel = hiltViewModel(),
-    navController: NavController,
     design: Design,
     departamento: String? = null
 ){
-    val context = LocalContext.current
-    var showLoginFormSheet by rememberSaveable { mutableStateOf(false) }
-    var showLoginOptionsSheet by rememberSaveable { mutableStateOf(false) }
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
     val coroutineScope = rememberCoroutineScope()
     var showError by remember { mutableStateOf(false) }
     var alreadyExecuted by rememberSaveable { mutableStateOf(false) }
@@ -147,73 +144,7 @@ fun MainSideMenuOptions(
             },
         )
     }
-    LaunchedEffect(Unit) {
-        if (!alreadyExecuted) {
-            if (userInformation == null || userInformation?.loginStatus == false) {
-                authViewModel.clearUserData(userInformation?.id ?: 0, false)
-                showLoginOptionsSheet = true
-            } else {
-                showLoginOptionsSheet = false
-            }
-            alreadyExecuted = true
-        }
-    }
 
-
-
-    LaunchedEffect(Unit) {
-        loginViewModel.eventFlow.collect { event ->
-            when (event) {
-                is LoginEvent.NavigateToEmailLogin -> {
-                    showLoginOptionsSheet = false
-                    showLoginFormSheet = true
-                }
-                is LoginEvent.NavigateToRegister -> {
-                    showLoginOptionsSheet = false
-                    navController.navigate(AppRoutes.SIGNUP_STEPONE)
-                }
-                is LoginEvent.ContinueAsGuest -> {
-                    showLoginOptionsSheet = false
-                }
-                is LoginEvent.StartGoogleLogin -> {
-                    showLoginOptionsSheet = false
-                }
-                is LoginEvent.RequestAdditionalPermissions -> TODO()
-            }
-        }
-    }
-
-    if (showLoginOptionsSheet) {
-        ModalBottomSheet(
-            onDismissRequest = { showLoginOptionsSheet = false },
-            sheetState = sheetState,
-            containerColor = Gray300
-        ) {
-            LoginOptionsScreen(loginOptionsViewModel = loginViewModel)
-        }
-    }
-
-    if (showLoginFormSheet) {
-        LaunchedEffect(Unit) {
-            authViewModel.eventFlow.collect { event->
-                if(event == AuthEvents.GoBack)  {
-                    showLoginOptionsSheet = true
-                    showLoginFormSheet = false
-                }
-            }
-        }
-        ModalBottomSheet(
-            onDismissRequest = { showLoginFormSheet = false },
-            sheetState = sheetState,
-            containerColor = Gray300
-        ) {
-            AuthScreen(
-                navController = navController,
-                onLoginSuccess = {
-                    showLoginFormSheet = false
-                })
-        }
-    }
     Column(
         modifier = Modifier.fillMaxSize()
             .verticalScroll(rememberScrollState())
@@ -328,7 +259,7 @@ fun MainSideMenuOptions(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically) {
                     Button(
-                        onClick = {showLoginOptionsSheet = true },
+                        onClick = { actions.onLoginSuccess() },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.onPrimary,
                             contentColor = MaterialTheme.colorScheme.primary,
@@ -353,7 +284,7 @@ fun MainSideMenuOptions(
                             coroutineScope.launch {
                                 val result = authViewModel.clearUserData(id, false)
                                 mainViewModel.onSaveSelectionRemiders(false)
-                                showLoginFormSheet = false
+                                actions.onLogoutSuccess()
                                 _isError.value = result
                             }
                         } else {

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -29,12 +30,14 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -67,6 +70,12 @@ import com.tramites1cero1.tramiappquibdo.R
 import com.tramites1cero1.tramiappquibdo.domain.model.TramiteAccion
 import com.tramites1cero1.tramiappquibdo.ui.components.FooterSponsors
 import com.tramites1cero1.tramiappquibdo.ui.navigation.AppRoutes
+import com.tramites1cero1.tramiappquibdo.ui.screen.login.AuthEvents
+import com.tramites1cero1.tramiappquibdo.ui.screen.login.AuthScreen
+import com.tramites1cero1.tramiappquibdo.ui.screen.login.AuthViewModel
+import com.tramites1cero1.tramiappquibdo.ui.screen.login.LoginEvent
+import com.tramites1cero1.tramiappquibdo.ui.screen.login.LoginOptionsScreen
+import com.tramites1cero1.tramiappquibdo.ui.screen.login.LoginOptionsViewModel
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.components.BottomNavBar
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.components.BottomNavBarActions
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.components.ConfirmExitDialog
@@ -83,6 +92,7 @@ import com.tramites1cero1.tramiappquibdo.ui.screen.main.components.TramitesActio
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.components.TramitesSection
 import com.tramites1cero1.tramiappquibdo.ui.screen.main.components.TramitesState
 import com.tramites1cero1.tramiappquibdo.ui.screen.pqrds.PqrdsChoiceScreen
+import com.tramites1cero1.tramiappquibdo.ui.theme.Gray300
 import com.tramites1cero1.tramiappquibdo.ui.theme.White
 import com.tramites1cero1.tramiappquibdo.utils.abrirURL
 import kotlinx.coroutines.delay
@@ -96,6 +106,8 @@ fun MainScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
     munViewModel: MunicipalityViewModel,
     remindersViewModel: RemindersViewModel = hiltViewModel(),
+    authViewModel : AuthViewModel = hiltViewModel(),
+    loginViewModel: LoginOptionsViewModel = hiltViewModel(),
 ) {
     val state by mainViewModel.uiState.collectAsStateWithLifecycle()
     val munState by munViewModel.uiState.collectAsStateWithLifecycle()
@@ -103,6 +115,11 @@ fun MainScreen(
     val currentRoute = navBackStackEntry?.destination?.route
     val isRemindersActive by mainViewModel.isActiveReminders.collectAsState()
 
+    var showLoginFormSheet by rememberSaveable { mutableStateOf(false) }
+    var showLoginOptionsSheet by rememberSaveable { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val userInformation  by authViewModel.user.collectAsState()
+    var showloginOptionunit by rememberSaveable { mutableStateOf(false) }
 
     val context = LocalContext.current
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -112,6 +129,85 @@ fun MainScreen(
     val locationPermissionState = rememberPermissionState(
         Manifest.permission.ACCESS_FINE_LOCATION
     )
+
+    LaunchedEffect(userInformation) {
+        userInformation?.let { info ->
+            if (info.loginStatus) {
+                showLoginOptionsSheet = false
+            } else {
+                if (!showloginOptionunit) {
+                    authViewModel.clearUserData(info.id, false)
+                    showLoginOptionsSheet = true
+
+                }
+                showloginOptionunit = true
+            }
+
+        } ?: run {
+            if (!showloginOptionunit){
+                showLoginOptionsSheet = true
+
+            }
+            showloginOptionunit = true
+        }
+
+
+    }
+
+    LaunchedEffect(Unit) {
+        loginViewModel.eventFlow.collect { event ->
+            when (event) {
+                is LoginEvent.NavigateToEmailLogin -> {
+                    showLoginOptionsSheet = false
+                    showLoginFormSheet = true
+                }
+                is LoginEvent.NavigateToRegister -> {
+                    showLoginOptionsSheet = false
+                    navController.navigate(AppRoutes.SIGNUP_STEPONE)
+                }
+                is LoginEvent.ContinueAsGuest -> {
+                    showLoginOptionsSheet = false
+                }
+                is LoginEvent.StartGoogleLogin -> {
+                    showLoginOptionsSheet = false
+                }
+                is LoginEvent.RequestAdditionalPermissions -> TODO()
+            }
+        }
+    }
+
+    if (showLoginOptionsSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { showLoginOptionsSheet = false },
+            sheetState = sheetState,
+            containerColor = Gray300
+        ) {
+            LoginOptionsScreen(loginOptionsViewModel = loginViewModel)
+        }
+    }
+
+
+    if (showLoginFormSheet) {
+        LaunchedEffect(Unit) {
+            authViewModel.eventFlow.collect { event ->
+                if (event == AuthEvents.GoBack) {
+                    showLoginOptionsSheet = true
+                    showLoginFormSheet = false
+                }
+            }
+        }
+        ModalBottomSheet(
+            onDismissRequest = { showLoginFormSheet = false },
+            sheetState = sheetState,
+            containerColor = Gray300
+        ) {
+            AuthScreen(
+                navController = navController,
+                onLoginSuccess = {
+                    showLoginFormSheet = false
+                })
+        }
+    }
 
     LaunchedEffect(Unit) {
         val activity = context as? Activity
@@ -185,7 +281,13 @@ fun MainScreen(
         onConfirmChangeLocation = mainViewModel::onConfirmChangeLocation,
         onDismissDialog = mainViewModel::onDismissChangeLocationDialog,
         goToSettingsUser = mainViewModel::goToSettingUser,
-        onSaveSelectionRemiders = mainViewModel::onSaveSelectionRemiders
+        onSaveSelectionRemiders = mainViewModel::onSaveSelectionRemiders,
+        onLoginSuccess ={
+            showLoginOptionsSheet = true
+        },
+        onLogoutSuccess = {
+            showLoginOptionsSheet = false
+        }
     )
 
 
@@ -262,7 +364,6 @@ fun MainScreen(
                             MainSideMenuOptions(
                                 state = sideMenuState,
                                 actions = sideMenuActions,
-                                navController = navController,
                                 design = municipalityData.design,
                                 departamento = municipalityData.departamento
                             )

@@ -38,7 +38,7 @@ class MunicipalityViewModel @Inject constructor(
     fun loadMunicipalityData() {
         viewModelScope.launch {
             _uiState.value = MunicipalityUiState.Loading
-            val result = repository.getMunicipalityData(19)
+            val result = repository.getMunicipalityData(5)
             val procedimientos = result.municipalityProcedures
             procedimientos.forEach { proc ->
                 println("EJEMPLO ID:${proc.id}, Nombre trámite: ${proc.procedures?.id}")

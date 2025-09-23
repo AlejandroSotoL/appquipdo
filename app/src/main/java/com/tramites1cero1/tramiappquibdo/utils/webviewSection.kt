@@ -53,7 +53,7 @@ fun webview(
         WebView(context).apply {
             settings.javaScriptEnabled = true
             settings.setSupportZoom(true)
-            settings.cacheMode = WebSettings.LOAD_NORMAL
+            settings.cacheMode = WebSettings.LOAD_NO_CACHE
             settings.databaseEnabled = true
             settings.domStorageEnabled = true
             settings.useWideViewPort = true
