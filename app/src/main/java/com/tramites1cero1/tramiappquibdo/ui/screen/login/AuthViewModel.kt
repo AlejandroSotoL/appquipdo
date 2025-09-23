@@ -1,15 +1,22 @@
 package com.tramites1cero1.tramiappquibdo.ui.screen.login
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.tramites1cero1.tramiappquibdo.R
 import com.tramites1cero1.tramiappquibdo.data.model.LoginDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import com.tramites1cero1.tramiappquibdo.data.model.ValidationResponseDTO
 import com.tramites1cero1.tramiappquibdo.domain.repository.AuthRepository
 import com.tramites1cero1.tramiappquibdo.domain.repository.UserPreferencesRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -38,7 +45,8 @@ sealed interface AuthEvents {
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val userPreferences: UserPreferencesRepository
+    private val userPreferences: UserPreferencesRepository,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState = _uiState.asStateFlow()
@@ -186,6 +194,13 @@ class AuthViewModel @Inject constructor(
     suspend fun clearUserData(id: Int, status: Boolean): ValidationResponseDTO {
         val response = authRepository.getOutUser(id, status)
         if (response.booleanStatus) {
+            Firebase.auth.signOut()
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(context.getString(R.string.default_web_client_id)).requestEmail()
+                .build()
+
+            val googleSignInClient = GoogleSignIn.getClient(context, gso)
+            googleSignInClient.signOut()
             authRepository.clearUserSession()
 
         }

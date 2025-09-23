@@ -83,7 +83,7 @@ class RemindersViewModel @Inject constructor(
                         reminders = emptyList(),
                         isLoading = false
                     )
-//                    authRepo.clearUserSession()
+                    authRepo.clearUserSession()
                 } else {
                     loadRemindersByUser(currentUser)
                 }

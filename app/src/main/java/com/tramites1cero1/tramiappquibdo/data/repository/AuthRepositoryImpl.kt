@@ -60,13 +60,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun clearUserSession() {
         context.dataStore.edit { preferences ->
             preferences.remove(USER_DATA)
-            Firebase.auth.signOut()
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(context.getString(R.string.default_web_client_id)).requestEmail()
-                .build()
 
-            val googleSignInClient = GoogleSignIn.getClient(context, gso)
-            googleSignInClient.signOut()
         }
     }
 
