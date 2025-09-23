@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 data class CourseDTO(
     @SerializedName("ID") val id: Int,
     @SerializedName("Title") val title: String,
-    @SerializedName("Descripcion") val description: String?,
+    @SerializedName("Description") val description: String?,
     @SerializedName("Categoria") val category: String?,
     @SerializedName("CupoDisponible") val availableSlots: Int?,
     @SerializedName("FechaInicio") val startDate: String?,

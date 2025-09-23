@@ -36,5 +36,9 @@ interface UserPreferencesRepository {
 
     //Create People Invitated
     suspend fun createPeopleInvitates(people: PeopleInvitated) : ValidationResponseDTO
+    //IsBloqued - Send Email
+    suspend fun saveTimeBloquedSend_Email(time: Long)
+    suspend fun getTimeBloquedSend_Email(): Long?
+    suspend fun clearTimeBloquedSend_Email()
 }
 

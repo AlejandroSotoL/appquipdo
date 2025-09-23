@@ -142,7 +142,6 @@ class SignUpStep3ViewModel @Inject constructor(
                     loginStatus = if (FirebaseAuth.getInstance().currentUser != null) 1 else 0
                 )
                 try {
-                    Log.d("LoginOptionsScreen", "Paso 3: Datos recuperados del draft: $finalUserData")
                     authRepository.saveRegistrationDraft(finalUserData)
                     val response = authRepository.registerUser(finalUserData)
                     val loginDto = LoginDTO(finalUserData.email, finalUserData.password)
@@ -151,18 +150,15 @@ class SignUpStep3ViewModel @Inject constructor(
                     if (response.booleanStatus && FirebaseAuth.getInstance().currentUser != null ) {
                         //  Autenticación inmediatamente después de registrar
                         val loginResult = authRepository.login(loginDto)
-                        Log.d("LoginOptionsScreen", "Autenticación después del registro: $loginResult")
                         if (loginResult.booleanStatus) {
                             authRepository.getUserInformationByEmail(loginDto.email)
                                 .onSuccess { user ->
-                                    Log.d("LoginOptionsScreen", "Información del usuario obtenida: $user")
                                     authRepository.saveUserSession(user)
                                     _uiState.update {
                                         it.copy(
                                             isLoading = true
                                         )
                                     }
-                                    Log.d("REGISTRO_DEBUG", "Autenticación exitosa después del registro")
                                 }
                                 .onFailure {
                                     Log.e("REGISTRO_DEBUG", "Fallo obteniendo información del usuario")

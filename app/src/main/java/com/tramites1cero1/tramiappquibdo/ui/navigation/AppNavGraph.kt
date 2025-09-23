@@ -74,7 +74,7 @@ fun AppNavHost(isDark: Boolean, navController: NavHostController, startDestinati
 
                     mainNavGraph(navController, munViewModel)
                     newsNavGraph(navController, escudoUrl = escudoUrl, nombreAlcaldia = nombreAlcaldia, newsUrl = newsUrl)
-                    paymentsNavGraph(navController, design, deparment )
+                    paymentsNavGraph(navController )
                     PublicServiceNavGraph(navController, munViewModel)
                     signUpNavGraph(navController)
                     pqrdsNavGraph(navController, pqrdsViewModel, codigoEntidad = state.data.codigoEntidad)
@@ -91,7 +91,7 @@ fun AppNavHost(isDark: Boolean, navController: NavHostController, startDestinati
                 startDestination = startDestination
             ) {
                 mainNavGraph(navController, munViewModel)
-                paymentsNavGraph(navController, design  = Design(), deparment = "")
+                paymentsNavGraph(navController)
                 newsNavGraph(navController, escudoUrl = "", nombreAlcaldia = "", newsUrl = "")
                 PublicServiceNavGraph(navController, munViewModel)
                 initialNavGraph(navController, munViewModel)

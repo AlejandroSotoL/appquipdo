@@ -1,6 +1,7 @@
 package com.tramites1cero1.tramiappquibdo.data.repository
 
 
+import com.tramites1cero1.tramiappquibdo.data.model.CourseDTO
 import com.tramites1cero1.tramiappquibdo.data.model.CourseRegistrationRequestDTO
 import com.tramites1cero1.tramiappquibdo.data.model.MetadataDTO
 import com.tramites1cero1.tramiappquibdo.data.network.CourseApiService
@@ -77,7 +78,7 @@ class CourseRepositoryImpl(
 }
 
 // Función de extensión para mapear el DTO a un modelo de dominio
-private fun com.tramites1cero1.tramiappquibdo.data.model.CourseDTO.toDomain(): Course {
+private fun CourseDTO.toDomain(): Course {
     return Course(
         id = this.id,
         title = this.title,

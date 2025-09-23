@@ -11,5 +11,7 @@ data class RecoveryPasswordUiState(
     val errorMessage: String? = null,
     val verificationCode: String = "",
     val isCodeError: Boolean = false,
-    val attempts: Int = 0
+    val attempts: Int = 0,
+    val numbersOfRequests:Int = 2,
+    val isBloquedBotton:Boolean = false,
 )

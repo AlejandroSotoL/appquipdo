@@ -22,7 +22,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
-
+import androidx.datastore.preferences.core.MutablePreferences
+import androidx.datastore.preferences.core.longPreferencesKey
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
 
 @Singleton
@@ -44,6 +45,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         val GUEST_USER_DATA = stringPreferencesKey("guest_user_data")
         val AUTH_TOKEN = stringPreferencesKey("auth_token")
         val LIST_PAYMENTS = stringPreferencesKey("LIST_PAYMENTS")
+        val IS_BLOQUED_BOTTOM = longPreferencesKey("IS_BLOQUED_BOTTOM")
     }
 
     override fun getGuestUserData(): Flow<UserDTO?> {
@@ -200,6 +202,22 @@ class UserPreferencesRepositoryImpl @Inject constructor(
             }
     }
 
+    override suspend fun saveTimeBloquedSend_Email(time: Long) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKey.IS_BLOQUED_BOTTOM] = time
+        }
+    }
+
+    override suspend fun getTimeBloquedSend_Email(): Long? {
+        val prefs = context.dataStore.data.first()
+        return prefs[PreferencesKey.IS_BLOQUED_BOTTOM]
+    }
+
+    override suspend fun clearTimeBloquedSend_Email() {
+        context.dataStore.edit { preferences ->
+            preferences.remove(PreferencesKey.IS_BLOQUED_BOTTOM)
+        }
+    }
 
     override suspend fun clearCurrentMunicipality() {
         context.dataStore.edit { preferences ->

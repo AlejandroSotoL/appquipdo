@@ -29,6 +29,8 @@ import com.tramites1cero1.tramiappquibdo.ui.screen.settingsUser.components.ShowM
 import com.tramites1cero1.tramiappquibdo.ui.theme.*
 import kotlinx.coroutines.launch
 import com.tramites1cero1.tramiappquibdo.R
+import kotlinx.coroutines.delay
+
 /* ---------- Helpers ---------- */
 fun isValidEmail(email: String): Boolean =
     email.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -42,28 +44,16 @@ fun RecoveryPasswordScreen(
     val uiState by recoveryPass.uiState
     val context = LocalContext.current
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val coroutineScope = rememberCoroutineScope()
     var showWarningToast by remember { mutableStateOf(false) }
 
-    /* --- Control del cierre del modal --- */
-    LaunchedEffect(sheetState.currentValue) {
-        snapshotFlow { sheetState.isVisible }
-            .collect { visible ->
-                if (!visible && uiState.showCodeSheet) {
-                    recoveryPass.onModalCloseWithoutCompleting()
-                    showWarningToast = true
-                }
-            }
-    }
 
-    if (showWarningToast) {
-        LaunchedEffect(showWarningToast) {
-            Toast.makeText(
-                context,
-                "No terminaste el proceso, cerrando sesión...",
-                Toast.LENGTH_SHORT
-            ).show()
-            showWarningToast = false
+    LaunchedEffect(Unit) {
+        recoveryPass.checkIfCanUnblock()
+    }
+    LaunchedEffect(uiState.navigate) {
+        if (uiState.navigate) {
+            navController.navigate(AppRoutes.CHANGE_ONLY_PASSWORD)
+            recoveryPass.resetNavigation()
         }
     }
 
@@ -77,10 +67,14 @@ fun RecoveryPasswordScreen(
     }
 
     /* --- Navegación cuando es exitoso --- */
-    LaunchedEffect(uiState.navigate) {
-        if (uiState.navigate) {
-            navController.navigate(AppRoutes.CHANGE_ONLY_PASSWORD)
-            recoveryPass.resetNavigation()
+    LaunchedEffect(showWarningToast) {
+        if (showWarningToast) {
+            Toast.makeText(
+                context,
+                "No terminaste el proceso, cerrando sesión...",
+                Toast.LENGTH_SHORT
+            ).show()
+            showWarningToast = false
         }
     }
 
@@ -112,8 +106,7 @@ fun RecoveryPasswordScreen(
         },
         modifier = Modifier.fillMaxSize(),
         containerColor = primarycolor
-    ){
-        innerPadding ->
+    ){ innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -156,6 +149,15 @@ fun RecoveryPasswordScreen(
                 )
 
                 Spacer(modifier = Modifier.height(35.dp))
+                if(!uiState.isBloquedBotton){
+                    Text(
+                        text = "Te enviaremos un código de seguridad a tu correo.",
+                        color = (Color.White),
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center
+                    )
+                }
+                Spacer(modifier = Modifier.height(35.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -175,12 +177,16 @@ fun RecoveryPasswordScreen(
                     }
 
                     Button(
-                        onClick = { recoveryPass.recoveryPassword() },
+                        onClick = {
+                            recoveryPass.recoveryPassword()
+                            recoveryPass.controlRequestToSendEmail()
+                                  },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF2196F3),
+                            containerColor =  if (!uiState.isBloquedBotton)Color(0xFF2196F3) else Color.Gray,
                             contentColor = Color.White
                         ),
                         modifier = Modifier.width(160.dp).height(50.dp),
+                        enabled = !uiState.isBloquedBotton,
                         shape = RoundedCornerShape(25.dp),
                     ) {
                         Text("Continuar",
@@ -188,13 +194,44 @@ fun RecoveryPasswordScreen(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(20.dp))
+
+                if (uiState.isBloquedBotton) {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        elevation = CardDefaults.cardElevation(6.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = "Has alcanzado el límite de intentos",
+                                color = Color(0xFFD32F2F),
+                                style = MaterialTheme.typography.titleMedium,
+                                textAlign = TextAlign.Center
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "Debes esperar 5 minutos para volver a intentarlo.",
+                                color = Color(0xFF5D4037),
+                                style = MaterialTheme.typography.bodyMedium,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
 
                 InfoText(
                     message = uiState.sendCodeResponse?.sentencesError ?: uiState.errorMessage,
                     isSuccess = uiState.sendCodeResponse?.booleanStatus ?: true,
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+
                 if (uiState.isCodeError) {
                     Text(
                         text = uiState.errorMessage ?: "Código inválido",
@@ -202,14 +239,6 @@ fun RecoveryPasswordScreen(
                         fontSize = 14.sp
                     )
                 }
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = "Te enviaremos un código de seguridad a tu dirección de correo.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = ColorTextSecondaryVariant,
-                    textAlign = TextAlign.Center
-                )
             }
         }
 
@@ -224,14 +253,17 @@ fun RecoveryPasswordScreen(
             }
         }
 
-        if (sheetState.isVisible) {
+        if(uiState.showCodeSheet) {
             ModalBottomSheet(
                 containerColor = Gray300,
                 sheetState = sheetState,
-                onDismissRequest = { coroutineScope.launch { sheetState.hide() } }
+                onDismissRequest = {
+                    recoveryPass.onModalCloseWithoutCompleting()
+                    showWarningToast = true
+                }
             ) {
                 val isValida = !uiState.isCodeError
-                ShowModalVerificationCode(  navController , isValida)
+                ShowModalVerificationCode(navController, isValida)
             }
         }
     }
