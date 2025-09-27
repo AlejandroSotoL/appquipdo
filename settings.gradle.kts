@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Centralizacion"
+rootProject.name = "tramiappquibdo"
 include(":app")
  
